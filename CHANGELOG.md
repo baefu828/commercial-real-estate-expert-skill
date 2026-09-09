@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README 重写：参照 anthropics/skills、marketingskills 等主流 Skill 仓库的写法，改为「定位 → 触发场景 → 模块索引 → 安装 → 示例 → 边界」结构
 - 安装方式扩展为 4 种（CLI / 克隆到各 Agent 目录 / Git Submodule / 手动加载）
 - 英文说明压缩为精简 English 段，中文为主
+- SKILL.md frontmatter 增加 `tags`（中英文关键词）与 `metadata`（domain/region/languages）
+- GitHub 仓库设置 15 个 topics 与中英双语 description，README 顶部展示标签
 
 ## [1.0.0] - 2026-09-09
 
