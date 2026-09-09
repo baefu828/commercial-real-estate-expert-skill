@@ -10,8 +10,6 @@
 
 Works with Claude Code, Claude.ai, OpenAI Codex, Cursor, Gemini CLI, GitHub Copilot, VS Code, WorkBuddy and any agent that supports the [Agent Skills spec](https://agentskills.io).
 
-`commercial-real-estate` `property-management` `real-estate-operations` `leasing` `tenant-management` `rent-collection` `industrial-park` `office-buildings` `retail-operations` `facility-management` `asset-management` `proptech` `agent-skills` `skill-md` `china-real-estate`
-
 ---
 
 ## 这是什么
