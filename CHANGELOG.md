@@ -5,6 +5,13 @@ All notable changes to this Skill will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- README 重写：参照 anthropics/skills、marketingskills 等主流 Skill 仓库的写法，改为「定位 → 触发场景 → 模块索引 → 安装 → 示例 → 边界」结构
+- 安装方式扩展为 4 种（CLI / 克隆到各 Agent 目录 / Git Submodule / 手动加载）
+- 英文说明压缩为精简 English 段，中文为主
+
 ## [1.0.0] - 2026-09-09
 
 ### Added
