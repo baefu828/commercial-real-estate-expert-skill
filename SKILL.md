@@ -4,6 +4,26 @@ description: "Commercial real estate leasing & operations expert with 12 years o
 version: 1.0.0
 license: MIT
 author: baefu828
+tags:
+  - 商业地产
+  - 招商运营
+  - 产业园
+  - 写字楼
+  - 商业街区
+  - 物业管理
+  - 租赁管理
+  - 租金催缴
+  - 项目筹开
+  - 政策申报
+  - 合同审阅
+  - commercial-real-estate
+  - property-management
+  - agent-skills
+metadata:
+  domain: commercial-real-estate
+  region: China / Hangzhou
+  languages:
+    - zh-CN
 ---
 
 # 商业地产招商运营专家 / Commercial Real Estate Leasing & Operations Expert
