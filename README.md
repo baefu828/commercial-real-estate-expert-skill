@@ -1,180 +1,230 @@
 # 商业地产招商运营专家 Skill
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
-![Skill Format](https://img.shields.io/badge/format-Agent%20Skills-orange.svg)
+**Commercial Real Estate Leasing & Operations Expert — an [Agent Skills](https://agentskills.io) package that turns 12 years of hands-on property operations into a portable skill for AI agents.**
 
-> **English**: Commercial Real Estate Leasing & Operations Expert Skill — 12 years of hands-on experience in industrial parks, office buildings, and commercial districts.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](./CHANGELOG.md)
+[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-5288ff.svg)](https://agentskills.io)
+[![References](https://img.shields.io/badge/references-10%20modules-green.svg)](./references/)
+[![Language](https://img.shields.io/badge/lang-中文-red.svg)](#english)
+
+Works with Claude Code, Claude.ai, OpenAI Codex, Cursor, Gemini CLI, GitHub Copilot, VS Code, WorkBuddy and any agent that supports the [Agent Skills spec](https://agentskills.io).
 
 ---
 
-## 📖 项目简介
+## 这是什么
 
-本 Skill 将 **12 年商业地产招商运营实战经验**封装为标准 Agent Skills 格式，可被 WorkBuddy、Claude Code、Cursor 等 AI 编程/对话工具直接加载使用。
+一个把**商业地产招商运营实战经验**打包成标准的 `SKILL.md` 目录，让 AI Agent 在遇到招商、催缴、筹开、合同审阅、政策申报等问题时，**自动加载对应知识库并给出可落地的方案**，而不是泛泛而谈的行业套话。
 
-无论你是：
-- 🏢 **商业地产从业者**：需要快速查阅招商/催缴/合同/政策等专业内容
-- 🤖 **AI 应用开发者**：希望为你的 Agent 集成商业地产领域专业能力
-- 📚 **运营/招商团队**：想用 AI 辅助日常决策与方案输出
+它不是一份电子书，也不是一个 prompt 模板，而是一套**按需加载的知识系统**：
 
-都能从这个 Skill 中获益。
+- Agent 冷启动时只读取 `SKILL.md`（约 200 行摘要）
+- 命中触发词后，才加载对应的 `references/` 模块原文
+- 需要出活时，直接调用 `templates/` 里的表单与模板
 
-## 🎯 核心能力
+### 和其他「商业地产 prompt」的区别
 
-| 领域 | 关键能力 | 代表数据 |
-|------|--------|--------|
-| **招商拓展** | 渠道搭建、品牌落位、租金定价 | 10个月 95% 招商率；引入星巴克/瑞幸/7-11 等 12+ 品牌 |
-| **收缴攻坚** | 分级催收、诉讼推进、风险预警 | 收缴率 95%-98%；累计追回欠缴 37 万 |
-| **筹开运营** | 交付倒排、承接查验、商户进场 | 疫情期间保障 43 家商户按期开业 |
-| **产业服务** | 孵化器申报、产业 IP 引入 | 单年落地活动 112 场、8000 人次 |
-| **政策申报** | 国高/市高、补贴申报 | 累计获补 375+ 万 |
-| **标准化建设** | 运营手册、SOP 编写 | 主导万科上海区域商办运营服务手册 |
+| | 通用大模型 | 本 Skill |
+|---|---|---|
+| 知识来源 | 公开泛化信息 | 6 个标杆项目操盘总结 + 万科产城 49 份制度提炼 + 82 篇 2025-2026 行业深度文章 |
+| 输出形态 | 建议性文字 | 带时间线、责任人、量化指标、风险预案的结构化方案 |
+| 数据支撑 | 无 | 招商率 95%、收缴率 95%-98%、追回欠缴 37 万等真实项目数据 |
+| 表单工具 | 无 | 催缴函、承接查验清单、筹开倒排表可直接套用 |
+| 边界意识 | 容易编造 | 明确标注经验边界，政策/法律类问题主动提示以官方口径为准 |
 
-详细能力清单见 [SKILL.md](./SKILL.md)。
+---
 
-## 📂 仓库内容
+## 它能做什么
+
+按「你说什么 → 它调什么 → 你得到什么」的方式触发：
+
+| 当你需要… | 自动加载 | 你会得到 |
+|---|---|---|
+| 做招商策略、品牌落位、租金定价、中介合作 | `leasing-strategy.md` | 渠道矩阵、品牌金字塔、去化节奏、租金定价方法论 |
+| 催欠租、发律师函、推进诉讼、做风险预警 | `collection-strategy.md` + 催缴函模板 | 10 步催缴时间线、分级催收动作、文书模板 |
+| 新项目筹开、交付倒排、承接查验、商户进场装修 | `startup-checklist.md` + 倒排计划模板 | 分阶段倒排表、查验清单、装修巡检标准 |
+| 审阅租赁合同、排查条款风险 | `contract-review-points.md` | 12 维清单逐项核对 + 16 条速查 + 违约触发点 |
+| 申报补贴、高企、孵化器、小微园区 | `policy-database.md` | 杭州市/区政策矩阵、申报路径、材料清单 |
+| 做商户星级评定、商户考核与激励 | `merchant-rating-system.md` | 五维度 100 分评分表 + 坪效指数 + 奖惩机制 |
+| 建物业标准、处理消防/应急/商户守则 | `property-management-standards.md` | 管理制度要点 + 46 项表单索引 |
+| 看行业趋势、做竞品分析、写运营复盘 | `industry-insights.md` | 82 篇深度文章的精华结论 |
+| 搭营运体系、写 SOP、建流程制度 | `vanke-ops-system.md` | 万科产城全套营运制度提炼 |
+| 查杭州各区租金、算坪效 | `rent-benchmark.md` | 分区租金参考区间与定价逻辑 |
+
+---
+
+## 仓库结构
 
 ```
 commercial-real-estate-expert-skill/
-├── SKILL.md                          ⭐ 统一入口（人设+能力+知识库索引）
-├── README.md                         项目说明（本文件）
-├── LICENSE                           MIT 协议
-├── CHANGELOG.md                      版本变更日志
-├── CONTRIBUTING.md                   贡献指南
-├── assets/avatar.png                 专家头像
-├── references/                       10 个知识库模块
-│   ├── collection-strategy.md        催缴策略（10步时间线+集团6步+实战数据）
-│   ├── contract-review-points.md     合同审阅（12维清单+16条速查）
-│   ├── industry-insights.md          行业洞察（82篇2025-2026深度文章）
-│   ├── leasing-strategy.md           招商策略（渠道+实战KPI+商户案例）
-│   ├── merchant-rating-system.md     商户星级评定（五维度100分）
-│   ├── policy-database.md            政策申报（杭州市/区矩阵）
-│   ├── property-management-standards.md  物业标准（46项表单）
-│   ├── rent-benchmark.md             租金基准（杭州各区参考）
-│   ├── startup-checklist.md          筹开管理（进场/装修/撤场/巡检）
-│   └── vanke-ops-system.md           万科营运（49份制度提炼）
-├── templates/                        3 个工具模板
+├── SKILL.md                          # 统一入口：人设 + 能力 + 触发词 + 知识库索引
+├── references/                       # 10 个知识库模块（按需加载）
+│   ├── collection-strategy.md        # 催缴策略：10 步时间线 + 集团 6 步 + 实战数据
+│   ├── contract-review-points.md     # 合同审阅：12 维清单 + 16 条速查
+│   ├── industry-insights.md          # 行业洞察：82 篇 2025-2026 深度文章精华
+│   ├── leasing-strategy.md           # 招商策略：渠道矩阵 + 实战 KPI + 商户案例
+│   ├── merchant-rating-system.md     # 星级评定：五维度 100 分 + 坪效指数
+│   ├── policy-database.md            # 政策申报：杭州市/区申报矩阵
+│   ├── property-management-standards.md  # 物业标准：46 项表单索引
+│   ├── rent-benchmark.md             # 租金基准：杭州各区参考区间
+│   ├── startup-checklist.md          # 筹开管理：进场/装修/巡检/撤场
+│   └── vanke-ops-system.md           # 万科营运：49 份制度提炼
+├── templates/                        # 3 个可直接套用的工具模板
 │   ├── 催缴函模板.md
 │   ├── 验房承接查验清单.md
 │   └── 筹开倒排计划模板.md
-└── .github/workflows/validate.yml    CI 校验
+├── assets/avatar.png
+├── CHANGELOG.md  CONTRIBUTING.md  LICENSE
+└── .github/workflows/validate.yml    # CI：frontmatter / 链接 / 路径合规校验
 ```
 
-## 🚀 快速开始
+---
 
-### 方式 1：在 WorkBuddy 中使用
+## 安装
 
-将仓库克隆到 Skills 目录：
+### 方式 1：CLI（推荐）
 
 ```bash
+npx skills add baefu828/commercial-real-estate-expert-skill
+# 或
+npx skillkit install baefu828/commercial-real-estate-expert-skill
+```
+
+### 方式 2：克隆到你的 Agent 目录
+
+```bash
+# WorkBuddy
 git clone https://github.com/baefu828/commercial-real-estate-expert-skill.git \
   ~/.workbuddy/skills/commercial-real-estate-expert
+
+# Claude Code
+git clone https://github.com/baefu828/commercial-real-estate-expert-skill.git \
+  ~/.claude/skills/commercial-real-estate-expert
+
+# Cursor / Codex / 其他（放到项目内也可被识别）
+git clone https://github.com/baefu828/commercial-real-estate-expert-skill.git \
+  .agents/skills/commercial-real-estate-expert
 ```
 
-重启 WorkBuddy 后，Skill 会自动出现在可用 Skill 列表中。
+重启工具后即可使用，无需额外配置。
 
-### 方式 2：在 Claude Code / Cursor 中使用
-
-直接指向 SKILL.md 即可：
+### 方式 3：作为 Git Submodule 引入项目
 
 ```bash
-# Claude Code（在你的项目目录）
-git clone https://github.com/baefu828/commercial-real-estate-expert-skill.git
-claude --skills ./commercial-real-estate-expert-skill
+git submodule add https://github.com/baefu828/commercial-real-estate-expert-skill.git \
+  .agents/skills/commercial-real-estate-expert
 ```
 
-### 方式 3：手动加载
+### 方式 4：手动加载
 
-将 `SKILL.md` 内容作为系统提示词前缀注入到任何支持 Markdown 文档加载的 Agent 框架中。
+把 `SKILL.md` 的内容作为系统提示词前缀，注入任何支持 Markdown 的 Agent 框架即可。
 
-## 💡 使用示例
+---
 
-### 示例 1：项目筹开方案
+## 使用示例
+
+直接用自然语言说，Agent 会自行判断加载哪个模块。
+
 ```
-我手上有一个 5 万㎡的产业园项目，从拿房到开业只有 8 个月，
+我手上有个 5 万㎡的产业园，从拿房到开业只有 8 个月，
 帮我出一份从 0 到 1 的筹开倒排计划。
 ```
-→ AI 会加载 `references/startup-checklist.md` 和 `templates/筹开倒排计划模板.md`，输出可落地的倒排表。
+→ 加载 `startup-checklist.md` + `筹开倒排计划模板.md`，输出带里程碑的倒排表。
 
-### 示例 2：租户催收
 ```
-某租户已欠租 3 个月，金额 18 万，沟通多次无果，
-如何分级推进催缴并准备诉讼？
+某租户欠租 3 个月共 18 万，沟通多次无果，
+怎么分级推进催缴、什么时候上律师函？
 ```
-→ AI 会加载 `references/collection-strategy.md` 和 `templates/催缴函模板.md`，给出分级催收+律师函+诉讼推进的完整方案。
+→ 加载 `collection-strategy.md` + `催缴函模板.md`，给分级催收 + 诉讼推进路径。
 
-### 示例 3：合同风险排查
 ```
-帮我审阅这份商业租赁合同，重点排查租金/物业费/保证金条款的风险点。
+帮我审这份租赁合同，重点看租金、物业费、保证金条款有什么坑。
 ```
-→ AI 会加载 `references/contract-review-points.md`，按 12 维清单逐项核对。
+→ 加载 `contract-review-points.md`，按 12 维清单逐项核对并标注法理依据。
 
-### 示例 4：政策申报路径
 ```
-我们园区有 12 家科技型中小企业，今年想申请市级高新技术企业和孵化器认定，
-需要准备哪些材料、走什么流程？
+园区有 12 家科技型中小企业，今年想报市高和孵化器，
+材料和流程怎么走？
 ```
-→ AI 会加载 `references/policy-database.md`，给出杭州市/区各级申报矩阵和材料清单。
+→ 加载 `policy-database.md`，给申报矩阵、材料清单与时间节点。
 
-## ⚠️ 使用须知
+也可以显式调用：`/commercial-real-estate-expert 帮我做一份商户星级评定方案`。
 
-本 Skill 提供的内容**仅供专业参考**，实际应用中请注意：
+---
 
-- 📈 **行情相关**：租金定价、招商政策等会因城市/区域/时间不同而异，请结合当地实际调整
-- ⚖️ **法律相关**：涉及合同条款解释、诉讼推进等问题，请咨询专业律师
-- 🏛️ **政策时效**：政策申报内容会随时间变化，请以最新政策文件为准
-- 🎯 **特殊业态**：医疗、教育、宗教等特殊业态规范，超出本 Skill 覆盖范围
+## 适合谁
 
-## 🤝 贡献
+- **招商 / 营运 / 资产管理人员**：需要快速拿到带数据的方案框架与表单
+- **商业地产团队负责人**：想把团队经验沉淀成可复用的 AI 助手
+- **AI 应用开发者**：需要一个垂直行业 Skill 作为集成示例
+- **产业园 / 街区运营方**：政策申报、商户管理、物业标准化的日常参考
 
-欢迎补充更多知识库内容、修复错误、改善文档！详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+## 不适合什么
 
-提交 PR 前请确保：
+- 具体城市的规划报建、消防验收等行政审批细节（以主管部门口径为准）
+- 医疗、教育、宗教等特殊业态的专业规范（超出本 Skill 覆盖范围）
+- 法律诉讼的最终判断（会给出路径建议，但会提示咨询专业律师）
+
+---
+
+## 使用须知
+
+本 Skill 输出的内容**供专业参考**：
+
+- 租金定价、招商政策等随城市、区域、时点变化，请结合当地行情调整
+- 政策申报具有时效性，请以最新政策文件为准
+- 涉及合同条款解释与诉讼推进，请咨询专业律师确认
+
+---
+
+## 贡献
+
+欢迎补充知识库、修正数据、改善文档，详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。提交 PR 前请确认：
+
 - Markdown 格式规范（CI 会自动校验）
-- 同步更新 `SKILL.md` 中的"知识库索引"章节（如新增/重命名 reference）
-- 在 `CHANGELOG.md` 的 `Unreleased` 段落记录变更
+- 新增或重命名 reference 时，同步更新 `SKILL.md` 的「知识库索引」
+- 在 [CHANGELOG.md](./CHANGELOG.md) 的 `Unreleased` 段落记录变更
 
-## 📜 许可证
-
-[MIT](./LICENSE) — 自由使用、修改、分发，需保留版权声明。
-
-## 🙏 致谢
-
-本 Skill 由 [@baefu828](https://github.com/baefu828) 基于 12 年商业地产招商运营实战经验整理发布。
-
-如有问题或建议，请在 GitHub Issues 区提交。
+觉得有用的话，点个 ⭐ 支持一下。
 
 ---
 
-**English version follows / 英文版本如下**
+## 许可证
+
+[MIT](./LICENSE) — 自由使用、修改、分发，保留版权声明即可。
+
+## 致谢
+
+由 [@baefu828](https://github.com/baefu828) 基于 12 年商业地产招商运营实战经验整理发布。问题与建议请提交 [Issue](https://github.com/baefu828/commercial-real-estate-expert-skill/issues)。
 
 ---
 
-# Commercial Real Estate Expert Skill
+<a id="english"></a>
 
-A standard Agent Skills format Skill encapsulating **12 years of hands-on commercial real estate leasing & operations experience** across industrial parks, office buildings, and commercial districts. Compatible with WorkBuddy, Claude Code, Cursor, and other AI agent frameworks.
+## English
 
-## Quick Start
+A standard [Agent Skills](https://agentskills.io) package encoding **12 years of commercial real estate leasing & operations experience** — industrial parks, office buildings, and commercial districts — from a practitioner who ran 6 flagship projects (17 万㎡ / 200+ tenants) at Vanke and Hangzhou's Wensan Digital Life Block.
+
+**What's inside**
+
+- `SKILL.md` — persona, capabilities, trigger keywords, and the reference index (loaded first)
+- `references/` × 10 — collection strategy, contract review, industry insights (82 articles), leasing strategy, merchant rating, policy subsidies, property management, rent benchmarks, startup checklist, Vanke operations system
+- `templates/` × 3 — dunning letters, handover inspection checklist, project launch countdown
+
+**Install**
 
 ```bash
-git clone https://github.com/baefu828/commercial-real-estate-expert-skill.git
+npx skills add baefu828/commercial-real-estate-expert-skill
+# or
+git clone https://github.com/baefu828/commercial-real-estate-expert-skill.git \
+  ~/.claude/skills/commercial-real-estate-expert
 ```
 
-Load `SKILL.md` as the entry point. Sub-files under `references/` and `templates/` are loaded on demand based on trigger keywords.
+**Use** — just describe the task in natural language and the agent loads the matching module:
 
-## Core Capabilities
+```
+A tenant owes 3 months of rent. How do I escalate collection and when should I send a lawyer's letter?
+→ loads collection-strategy.md + dunning letter template
+```
 
-- **Leasing & Investment Promotion**: channel building, brand placement, rent pricing — 95% occupancy in 10 months
-- **Rent Collection**: tiered collection, legal escalation, risk alerting — 95-98% collection rate
-- **Project Startup**: delivery countdown, handover inspection, tenant onboarding
-- **Industry Services**: incubator applications, IP introduction, community building
-- **Policy Subsidies**: national/provincial high-tech applications, subsidy filings — ¥3.75M+ secured
-- **Standardization**: SOP design, operations handbook writing
-
-## License
-
-MIT — see [LICENSE](./LICENSE).
-
-## Credits
-
-Curated by [@baefu828](https://github.com/baefu828). Issues and PRs welcome.
+**Caveats** — rent benchmarks and policy content are China (Hangzhou)-specific and time-sensitive; legal escalation advice should be confirmed with a licensed lawyer. MIT licensed. Issues and PRs welcome.
