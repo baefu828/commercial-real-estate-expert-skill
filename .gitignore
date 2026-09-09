@@ -1,0 +1,33 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Python / Node
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+node_modules/
+
+# Build artifacts
+*.zip
+*.tar.gz
+*.tgz
+
+# Logs
+*.log
+
+# Local secrets / configs
+.env
+.env.local
+*.local
+
+# Temp files
+.tmp/
+.cache/

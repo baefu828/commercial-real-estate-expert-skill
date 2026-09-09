@@ -1,0 +1,123 @@
+name: Validate Skill
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate:
+    name: Validate Skill format & links
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          echo "Checking SKILL.md exists..."
+          test -f SKILL.md || (echo "❌ SKILL.md not found" && exit 1)
+          echo "✅ SKILL.md exists"
+
+          echo "Validating frontmatter..."
+          # Extract frontmatter (between first two --- lines)
+          FRONTMATTER=$(awk '/^---$/{c++; next} c==1' SKILL.md)
+          if [ -z "$FRONTMATTER" ]; then
+            echo "❌ SKILL.md has no frontmatter"
+            exit 1
+          fi
+          echo "$FRONTMATTER"
+
+          # Check required fields
+          for field in name description version license; do
+            if ! echo "$FRONTMATTER" | grep -q "^${field}:"; then
+              echo "❌ Missing required field: $field"
+              exit 1
+            fi
+          done
+          echo "✅ All required fields present"
+
+      - name: Validate references & templates directories
+        run: |
+          echo "Checking references/ ..."
+          if [ -d "references" ]; then
+            COUNT=$(find references -name "*.md" -type f | wc -l)
+            echo "✅ Found $COUNT markdown files in references/"
+          else
+            echo "❌ references/ directory missing"
+            exit 1
+          fi
+
+          echo "Checking templates/ ..."
+          if [ -d "templates" ]; then
+            COUNT=$(find templates -name "*.md" -type f | wc -l)
+            echo "✅ Found $COUNT markdown files in templates/"
+          else
+            echo "❌ templates/ directory missing"
+            exit 1
+          fi
+
+      - name: Check internal links in SKILL.md
+        run: |
+          echo "Checking internal markdown links..."
+          # Extract all markdown links pointing to .md files
+          LINKS=$(grep -oE '\[[^]]*\]\([^)]*\.md\)' SKILL.md | grep -oE '\([^)]*\)' | tr -d '()' || true)
+
+          if [ -z "$LINKS" ]; then
+            echo "ℹ️  No internal links found in SKILL.md"
+            exit 0
+          fi
+
+          MISSING=0
+          while IFS= read -r link; do
+            [ -z "$link" ] && continue
+            # Skip URLs (http/https)
+            [[ "$link" =~ ^https?:// ]] && continue
+            if [ ! -f "$link" ]; then
+              echo "❌ Broken link: $link"
+              MISSING=$((MISSING + 1))
+            fi
+          done <<< "$LINKS"
+
+          if [ $MISSING -gt 0 ]; then
+            echo "❌ $MISSING broken link(s) found"
+            exit 1
+          fi
+          echo "✅ All internal links valid"
+
+      - name: Check no personal info leaked
+        run: |
+          echo "Scanning for potential personal information leaks..."
+          # Skip this check if .gitignore'd patterns (just basic checks here)
+          FOUND=0
+
+          # Email pattern (basic)
+          if grep -rnE '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}' SKILL.md README.md CONTRIBUTING.md CHANGELOG.md 2>/dev/null | grep -vE 'users\.noreply\.github\.com|example\.com|baefu828@users' ; then
+            echo "⚠️  Potential email addresses found - please review"
+            FOUND=$((FOUND + 1))
+          fi
+
+          # Windows-style paths
+          if grep -rnE '[A-Z]:\\\\[a-zA-Z]' SKILL.md README.md CONTRIBUTING.md references/ templates/ 2>/dev/null; then
+            echo "❌ Windows-style paths found in published content"
+            FOUND=$((FOUND + 1))
+          fi
+
+          if [ $FOUND -gt 0 ]; then
+            echo "❌ Personal info scan failed"
+            exit 1
+          fi
+          echo "✅ No personal info leaks detected"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "=========================================="
+          echo "Skill validation summary"
+          echo "=========================================="
+          echo "SKILL.md: $(test -f SKILL.md && echo '✅' || echo '❌')"
+          echo "references/: $(find references -name '*.md' 2>/dev/null | wc -l) files"
+          echo "templates/: $(find templates -name '*.md' 2>/dev/null | wc -l) files"
+          echo "LICENSE: $(test -f LICENSE && echo '✅' || echo '❌')"
+          echo "README: $(test -f README.md && echo '✅' || echo '❌')"
